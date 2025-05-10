@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Career Recommendation</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Career Recommendation System</h2>
+
+    <div class="form-group">
+      <label for="resume">Paste your resume text:</label>
+      <textarea id="resume" class="form-control" rows="6" placeholder="e.g., Experience with Python, SQL, machine learning..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="interests">Enter your interests (comma-separated):</label>
+      <input type="text" id="interests" class="form-control" placeholder="e.g., data analysis, AI">
+    </div>
+
+    <button class="btn btn-primary" onclick="sendData()">Get Recommendation</button>
+
+    <h3 id="result" class="mt-4"></h3>
+  </div>
+
+  <script>
+    function sendData() {
+      const resume = document.getElementById('resume').value;
+      const interests = document.getElementById('interests').value.split(',');
+
+      fetch('http://127.0.0.1:5000/api/recommend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resume_text: resume, interests: interests })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('result').innerText = "Recommended Career: " + data.recommended_role;
+      })
+      .catch(error => {
+        document.getElementById('result').innerText = "Error: " + error;
+      });
+    }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
