@@ -28,7 +28,7 @@
       const resume = document.getElementById('resume').value;
       const interests = document.getElementById('interests').value.split(',');
 
-      fetch('http://127.0.0.1:5000/api/recommend', {
+      fetch(''https://aditya02.pythonanywhere.com/api/recommend', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resume_text: resume, interests: interests })
